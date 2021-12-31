@@ -113,7 +113,7 @@ int RotatedArrayPeekDuplicates(int a[], int h)
       return mid - 1;
 
     // if low = mid = high (example {2 , 2, 6 , 2 })
-    if (  (a[low] == a[mid]) && (a[high] == a[mid])  )
+    if ((a[low] == a[mid]) && (a[high] == a[mid]))
     {
       // check if low is pivot
       if (a[low] > a[low + 1])
@@ -130,15 +130,15 @@ int RotatedArrayPeekDuplicates(int a[], int h)
 
     else if (a[low] < a[mid])
     { // means left array is sorted than ans will mid to high
-      low = mid+1;
+      low = mid + 1;
     }
     else if (a[low] == a[mid] && a[mid] < a[high])
     { // if low=mid and mid > high means right array is sorted ans in mid to high
-      low = mid+1;
+      low = mid + 1;
     }
     else
     { // means right array is sorted than ans will low to mid-1
-      high = mid -1;
+      high = mid - 1;
     }
   }
   return -1;
@@ -196,7 +196,48 @@ int floorNumberv(int a[], int h, int val)
 
   return high; // if val not found
 };
+int splitArray(vector<int> &nums, int m)
+{
+  int start = 0;
+  int end = 0;
 
+  for (auto i : nums)
+  {
+    start = max(start, i);
+    end += i;
+  };
+  // cout<<start<<endl;
+  // cout<<end<<endl;
+  while (start < end)
+  {
+    int mid = start + (end - start) / 2;
+
+    int pieces = 1;
+    int sum = 0;
+
+    for (auto num : nums)
+    {
+      if (sum + num > mid)
+      {
+        sum = num;
+        pieces++;
+      }
+      else
+      {
+        sum += num;
+      };
+    };
+   
+    if (pieces > m){
+
+      start = mid + 1;
+    }
+    else{
+      end = mid;
+    }
+  };
+  return start;
+}
 int main()
 {
   // int arr[] = {2,3,6,8,9,19};
@@ -204,7 +245,8 @@ int main()
   // int arr[] = {2,3,6,8,9,19,444,6666,8888,22222,6234544};//11
   // int arr[] = {3,4,5,6,7,8,9,0,1,2};// Roteted Sorted Array
   // int arr[] = {2,3,4,4,4,5,1};// Roteted Sorted Array
-  int arr[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1}; // Rotated Sorted Array
+  // int arr[] = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1}; // Rotated Sorted Array
+  vector<int> arr{7, 2, 5, 10, 8}; // Split Array
 
   // cout << binarySearch(arr,6, 10);
   // cout << ceilingNumber(arr,6, 29);
@@ -212,7 +254,8 @@ int main()
   // cout << binarySearchInfiniteArray(arr, 22222);
   // cout << RotatedArrayPeek(arr,4);
   // cout << RotatedArraySearch(arr,4,2);
-  cout << RotatedArrayPeekDuplicates(arr, 19);
+  // cout << RotatedArrayPeekDuplicates(arr, 19);
+  cout << splitArray(arr, 2);
 
   return 0;
 }
