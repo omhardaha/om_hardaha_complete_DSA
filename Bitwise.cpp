@@ -31,6 +31,43 @@ int FindNonRepeatingNumInArray(vector<int> s)
      // bcoz 5^5 = 0 ;
 }
 
+int FindNonRepeatingNumInArrayMoreThan2Number(vector<int> s)
+{
+    int bits[32] = {0};
+    int bitsofMinus[32] = {0};
+    int base ;
+    int ans = 0;
+    for(auto num : s){
+        base = 0;
+        while (num>0)
+        {
+             if(num&1) bits[base]++;
+           num= num>>1;
+             base++;       
+        }
+        num = abs(num);
+        while (num>0)
+        {
+           if(num&1) bitsofMinus[base]++;
+           num= num>>1;
+           base++;       
+        }
+    }
+
+    for (int i = 0; i <32; i++){
+        ans += (bits[i] % 3) * pow(2,i);
+    }; 
+
+    if(ans==0){
+
+     for (int i = 0; i <32; i++){
+        ans += (bitsofMinus[i] % 3) * pow(2,i);
+    };   
+ans = -ans;
+    }
+     return ans;
+}
+
 int FindIthBIT(int n, int ith){
 
     int bitIth = (1<<(ith-1));
@@ -130,6 +167,10 @@ int main()
     // vector<int> s = {1, 2, 3, 4, 5, 1, 3, 4, 5};
     // cout << FindNonRepeatingNumInArray(s);
 
+    //      ------Non-Repeating-Int-2>------
+    // vector<int> s = {-2,-2,1,1,4,1,4,4,-4,-2};
+    // cout << FindNonRepeatingNumInArrayMoreThan2Number(s);
+
     //      ------Find ith Bit------
     // cout << FindIthBIT(27,3);
 
@@ -138,6 +179,24 @@ int main()
 
     //      ------Reset ith Bit 1------
     // cout << ResetIthBIT(27,1);
+
+    //      ------Compliment Of a Number------
+    // cout << (~27) +1;
+
+        //  ------Compliment Of a Number------
+    // cout << (1^2^1^3^2^5) ;
+
+    //  ------Find No of digit in base b------
+        // 10 have 4 digit
+        // 7 hv 3
+        // 64 hv 5
+        // int numberOfDigit = log2(10) +1;
+        // cout << numberOfDigit ;
+        int n=46;
+string s = to_string(n);
+        sort(s.rbegin(),s.rend());
+        n = stoi(s);
+cout<<n;
 
     return 0;
 }
