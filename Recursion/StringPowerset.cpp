@@ -54,7 +54,7 @@ void letterPermutations(string& s, int index)
 };
 int main()
 {
-  string s = "AAAAAAAAAAA";
+  string s = "abc";
   string temp;
      powerSet(0,s,temp);
   // permutations(s);
