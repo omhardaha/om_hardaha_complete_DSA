@@ -10,8 +10,9 @@ int findKthSmallest(vector<int>& nums, int k) {
     return max_heap.top();
     }
 int main(){
-    vector<int>nums = {1,4,3,2,5,6};
-    int k = 2;
-    cout<<findKthSmallest(nums,k);
+    // vector<int>nums = {1,4,3,2,5,6};
+    // int k = 2;
+    // cout<<findKthSmallest(nums,k);
+
  return 0;
 }
