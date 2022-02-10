@@ -40,5 +40,8 @@
     "**/.*/**",
     "**/.vscode",
     "**/.vscode/**"
-  ]
+  ],
+  "files.exclude": {
+    " **/*.exe ": true
+  }
 }
