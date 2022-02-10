@@ -42,6 +42,8 @@
     "**/.vscode/**"
   ],
   "files.exclude": {
-    " **/*.exe ": true
+    " **/*.exe ": true,
+    " **/*.gitignore ": true,
+    " **/*.gitattributes ": true
   }
 }
