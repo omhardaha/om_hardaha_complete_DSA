@@ -5,10 +5,10 @@ vector<int> findClosestElements(vector<int>& arr, int k, int x) {
         vector<int> ans;
         priority_queue< pair<int,int> > max_heap;       
         
-        for(auto i:arr)
+        for(auto i:arr){
          max_heap.push({abs(i-x),i});
-        
-        while(max_heap.size()>k) max_heap.pop();
+        if(max_heap.size()>k) max_heap.pop();
+        }
         
         while(!max_heap.empty()){
             ans.push_back(max_heap.top().second);
