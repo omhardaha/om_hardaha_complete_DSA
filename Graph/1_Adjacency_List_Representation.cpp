@@ -54,7 +54,6 @@ public:
           visited[i] = true;
         }
       }
-      // visited[d] = true;
     }
   }
 };
@@ -70,6 +69,8 @@ int main()
   p.addEdge(6, 5);
   p.addEdge(5, 1);
   p.addEdge(5, 6);
+  p.addEdge(5, 0);
+  p.addEdge(5, 4);
   // p.printGraph();
   p.bfs(1);
   return 0;
