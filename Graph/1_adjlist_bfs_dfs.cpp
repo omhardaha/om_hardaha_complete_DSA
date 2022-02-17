@@ -34,6 +34,7 @@ public:
   //  Breadth First Search (BFS)
   void bfs(int source)
   {
+    cout << "bfs is --> ";
     queue<int> q;
     vector<bool> visited(size);
 
@@ -56,6 +57,25 @@ public:
       }
     }
   }
+// Depth First Search (DFS)
+  void dfshelper(int source, vector<bool> &visited)
+  {
+    visited[source] = true;
+    cout << source << " ";
+    for (auto i : l[source])
+    {
+      if (!visited[i])
+      {
+        dfshelper(i, visited);
+      }
+    }
+  }
+  void dfs(int source)
+  {
+    cout << "dfs is --> ";
+    vector<bool> visited(size, false);
+    dfshelper(source, visited);
+  }
 };
 
 int main()
@@ -72,6 +92,8 @@ int main()
   p.addEdge(5, 0);
   p.addEdge(5, 4);
   // p.printGraph();
-  p.bfs(1);
-  return 0;
+  // p.bfs(1);
+  // p.dfs(1);
+  vector<bool>s(4,false);
+  if(s[2]==0)cout<<"1";
 }
