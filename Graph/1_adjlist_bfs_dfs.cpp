@@ -94,6 +94,4 @@ int main()
   // p.printGraph();
   // p.bfs(1);
   // p.dfs(1);
-  vector<bool>s(4,false);
-  if(s[2]==0)cout<<"1";
 }

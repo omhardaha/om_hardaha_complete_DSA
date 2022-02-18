@@ -20,7 +20,6 @@ Node *newNode(int k)
 
 bool path(Node *root, int val, vector<int> &temp)
 {
-
     if (root == nullptr)
         return false;
     temp.push_back(root->val);
@@ -36,21 +35,27 @@ bool path(Node *root, int val, vector<int> &temp)
     return false;
 }
 
-// TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-//         if(!root)return nullptr;
-        
-//         if(root->val == p->val || root->val == q->val)return root;
-        
-//         TreeNode* l = lowestCommonAncestor(root->left,p,q);
-//         TreeNode* r = lowestCommonAncestor(root->right,p,q);
-        
-//         if(l!=nullptr && r!=nullptr)return root;
-        
-//         if(l==nullptr)return r;
-//         if(r==nullptr)return l;
-        
-//         return nullptr;
-//     }
+Node *lowestCommonAncestor(Node *root, Node *p, Node *q)
+{
+    if (!root)
+        return nullptr;
+
+    if (root->val == p->val || root->val == q->val)
+        return root;
+
+    Node *l = lowestCommonAncestor(root->left, p, q);
+    Node *r = lowestCommonAncestor(root->right, p, q);
+
+    if (l && r)
+        return root; // sorthand
+
+    if (l == nullptr)
+        return r;
+    if (r == nullptr)
+        return l;
+
+    return nullptr;
+}
 int main()
 {
     //        1
@@ -63,6 +68,6 @@ int main()
     root->left->right = newNode(5);
     root->right->left = newNode(6);
     root->right->right = newNode(7);
-    cout << LCA(root, 6, 4);
+    cout << lowestCommonAncestor(root, root->right->left, root->right->right)->val; // lca(root, 6, 7)
     return 0;
 }
