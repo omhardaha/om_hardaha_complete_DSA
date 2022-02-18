@@ -18,30 +18,27 @@ Node *newNode(int k)
 // ABOVE IS IMPLIMENTATION OF TREE
 
 // Code Starts Here -----
-int maxHeight(Node *root)
+int maxDepth(Node *root, int &ans)
 {
   if (!root)
     return 0;
-  int left = maxHeight(root->left);
-  int right = maxHeight(root->right);
+  int left = maxDepth(root->left, ans);
+  int right = maxDepth(root->right, ans);
+  ans = max(ans, abs(left - right));
   return 1 + max(left, right);
 }
-
-int BalanceTree(Node *root)
-{
-  if (!root)
-    return 0;
-  int left = maxHeight(root->left);
-  int right = maxHeight(root->right);
-  return 1 + max(left, right);
-}
-
+bool isSameTree(Node* p, Node* q) {
+        if(!p && !q)return true;
+        if(p && !q || !p && q)return false;
+        return p->val==q->val && isSameTree(p->left,q->left)&& isSameTree(p->right,q->right);
+    }
 int main()
 {
   //        4
   //     2      6
   //  1   3   5   7
   //                 8
+  //                   9
   Node *root = newNode(1);
   root->left = newNode(2);
   root->right = newNode(6);
@@ -50,9 +47,10 @@ int main()
   root->right->left = newNode(5);
   root->right->right = newNode(7);
   root->right->right->right = newNode(8);
+  // root->right->right->right->right = newNode(9);
 
-  
-
-  // for kth largest element = count number of nodes and minis then then find kth smallest
+  int ans = 0;
+  maxDepth(root, ans);
+  cout << ((ans > 1) ? "Tree is Not balanced" : "Tree is balanced");
   return 0;
 }
