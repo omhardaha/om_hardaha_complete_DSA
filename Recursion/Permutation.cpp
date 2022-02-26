@@ -21,7 +21,7 @@ void permutations(string s, vector<string> &ans, int index = 0)
 int main()
 {
 
-  string s = "abc";
+  string s = "abcd";
   string temp = "";
 
   vector<string> ans;
@@ -29,6 +29,6 @@ int main()
   permutations(s, ans); // number of permutation = factorial n
 
   for (auto i : ans)
-    cout << i << " ";
+    cout << i << "       ";
   return 0;
 }
