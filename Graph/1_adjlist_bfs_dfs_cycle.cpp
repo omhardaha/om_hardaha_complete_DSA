@@ -20,7 +20,7 @@ public:
         if (!dir)
             l[n].push_back(m);
     }
-
+    // printing Graph
     void printGraph()
     {
         for (int i = 0; i < size; i++)
@@ -33,6 +33,7 @@ public:
             cout << endl;
         }
     }
+
     //  Breadth First Search (BFS)
     void bfs(int source)
     {
@@ -59,6 +60,7 @@ public:
             }
         }
     }
+
     // Depth First Search (DFS)
     void dfshelper(int source, vector<bool> &visited)
     {
@@ -72,7 +74,6 @@ public:
             }
         }
     }
-
     void dfs(int source)
     {
         cout << "dfs is --> ";
@@ -80,29 +81,7 @@ public:
         dfshelper(source, visited);
     }
 
-    bool bfsCycleHelper(int source, vector<bool> &visited)
-    {
-        queue<pair<int, int>> nodes;
-        nodes.push({source, -1});
-        visited[source] = true;
-
-        while (!nodes.empty())
-        {
-            int cur = nodes.front().first;
-            int prev = nodes.front().second;
-            nodes.pop();
-            for (auto i : l[cur])
-            {
-                if (!visited[i])
-                {
-                    visited[i] = true;
-                    nodes.push({i, cur});
-                }
-            }
-        }
-
-        return false;
-    }
+    // Cylce Detection Using bfs
     bool bfsCycle()
     {
         vector<bool> visited(size, false);
@@ -110,25 +89,79 @@ public:
         {
             if (!visited[i])
             {
-                if (bfsCycleHelper(i, visited))
+                queue<pair<int, int>> nodes;
+                nodes.push({i, -1});
+                visited[i] = true;
+                while (!nodes.empty())
+                {
+                    int cur = nodes.front().first;
+                    int prev = nodes.front().second;
+                    nodes.pop();
+                    for (auto node : l[cur])
+                    {
+                        if (visited[node] && node != prev)
+                        {
+                            return true;
+                        }
+                        if (!visited[node])
+                        {
+                            visited[node] = true;
+                            nodes.push({node, cur});
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    // Cylce Detection Using bfs
+    bool dfsCycleHelper(int source, vector<bool> &visited, int perent)
+    {
+        visited[source] = true;
+        for (auto node : l[source])
+        {
+            if (visited[node] && node != perent)
+            {
+                return true;
+            }
+            if (!visited[node])
+            {
+                visited[node] = true;
+                dfsCycleHelper(node, visited, source);
+            }
+        }
+        return false;
+    };
+    bool dfsCycle()
+    {
+        vector<bool> visited(size, false);
+        for (int i = 0; i < size; i++)
+        {
+            if (!visited[i])
+            {
+                if (dfsCycleHelper(i, visited, -1))
                 {
                     return true;
                 };
             }
         }
         return false;
-    }
+    };
 };
 
 int main()
 {
     Graph p(7);
-    p.addEdge(1, 2);
-    p.addEdge(2, 3);
     p.addEdge(4, 3);
-    p.addEdge(1, 4);
-    // p.printGraph();
+    p.addEdge(4, 6);
+    p.addEdge(5, 6);
+    p.addEdge(5, 3);
+
+    p.printGraph();
     // p.dfs(1);
+    // cout << p.bfsCycle();
+    cout << p.dfsCycle();
 
     return 0;
 };
