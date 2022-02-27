@@ -222,22 +222,60 @@ public:
         return true;
     }
 
+    // Topological Sort Using DFS
+    // Note - TopoLogical only present when Graph is DAG.
+    void topologicalSortDfsHelper(int source, stack<int> &st, vector<bool> &visited)
+    {
+        visited[source] = true;
+        for (auto i : l[source])
+        {
+            if (!visited[i])
+            {
+                topologicalSortDfsHelper(i, st, visited);
+            }
+        }
+        st.push(source);
+    };
+    vector<int> topologicalSortDfs()
+    {
+        stack<int> st;
+        vector<bool> visited(size, false);
+        for (int i = 0; i < size; i++)
+        {
+            if (!visited[i])
+            {
+                topologicalSortDfsHelper(i, st, visited);
+            }
+        }
+        vector<int> topoList;
+        while (!st.empty())
+        {
+            topoList.push_back(st.top());
+            st.pop();
+        }
+        return topoList;
+    }
+
 
 };
 
 int main()
 {
     Graph p(7, false); // for making directed use 2nd params as false
-    p.addEdge(1, 0);
-    p.addEdge(1, 2);
+    p.addEdge(1, 6);
+    p.addEdge(1, 5);
+    p.addEdge(5, 0);
+    p.addEdge(0, 6);
+    p.addEdge(0, 3);
     p.addEdge(0, 2);
-    p.addEdge(2, 1);
+    p.addEdge(3, 4);
 
     p.printGraph();
-    // p.dfs(1);
-    // cout << p.bfsCycle();
-    // cout << p.dfsCycle();
-    //      << p.isBipartiteBFS(1);
-    cout << p.dfsCycleDirectedGraph();
+
+    vector<int> v = p.topologicalSortDfs();
+    for (auto i : v)
+    {
+        cout << i << " ";
+    }
     return 0;
 };
