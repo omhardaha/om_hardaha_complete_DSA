@@ -5,20 +5,24 @@ class Graph
 {
 private:
     int size;
+    bool unDirected;
     vector<int> *l;
 
 public:
-    Graph(int v)
+    Graph(int v, bool dir = true)
     {
         size = v;
+        unDirected = dir;
         l = new vector<int>[v];
     }
     // adding edge
-    void addEdge(int m, int n, bool dir = false)
+    void addEdge(int m, int n)
     {
         l[m].push_back(n);
-        if (!dir)
+        if (unDirected)
+        {
             l[n].push_back(m);
+        }
     }
     // printing Graph
     void printGraph()
@@ -149,7 +153,48 @@ public:
         return false;
     };
 
-    // Checking Graph is Bipartite Graph or Not
+    // Cylce Detection Using dfs in DirectedGraph
+    bool dfsCycleDirectedGraphHelper(int source, vector<bool> &visited, vector<bool> &dfsVisited)
+    {
+        visited[source] = true;
+        dfsVisited[source] = true;
+        for (auto i : l[source])
+        {
+            if (!visited[i])
+            {
+                if (dfsCycleDirectedGraphHelper(i, visited, dfsVisited))
+                {
+                    return true;
+                };
+            }
+            else if (dfsVisited[i])
+            {
+                return true;
+            }
+        }
+        dfsVisited[source] = false;
+
+        return false;
+    };
+
+    bool dfsCycleDirectedGraph()
+    {
+        vector<bool> visited(size, false);
+        vector<bool> dfsVisited(size, false);
+        for (int i = 0; i < size; i++)
+        {
+            if (!visited[i])
+            {
+                if (dfsCycleDirectedGraphHelper(i, visited, dfsVisited))
+                {
+                    return true;
+                };
+            }
+        }
+        return false;
+    }
+
+    // Checking Graph is Bipartite Graph or Not using bfs
     bool isBipartiteBFS(int source)
     {
         vector<int> colored(size, -1);
@@ -174,25 +219,25 @@ public:
                 }
             }
         }
-
         return true;
     }
+
+
 };
 
 int main()
 {
-    Graph p(7);
-    p.addEdge(0, 1);
-    p.addEdge(0, 3);
-    p.addEdge(2, 3);
+    Graph p(7, false); // for making directed use 2nd params as false
+    p.addEdge(1, 0);
+    p.addEdge(1, 2);
+    p.addEdge(0, 2);
     p.addEdge(2, 1);
 
     p.printGraph();
-    p.dfs(1);
+    // p.dfs(1);
     // cout << p.bfsCycle();
     // cout << p.dfsCycle();
-    cout << endl
-         << p.isBipartiteBFS(1);
-
+    //      << p.isBipartiteBFS(1);
+    cout << p.dfsCycleDirectedGraph();
     return 0;
 };
