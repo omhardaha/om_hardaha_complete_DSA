@@ -13,7 +13,7 @@ public:
         size = v;
         l = new vector<int>[v];
     }
-
+    // adding edge
     void addEdge(int m, int n, bool dir = false)
     {
         l[m].push_back(n);
@@ -115,7 +115,7 @@ public:
         return false;
     }
 
-    // Cylce Detection Using bfs
+    // Cylce Detection Using dfs
     bool dfsCycleHelper(int source, vector<bool> &visited, int perent)
     {
         visited[source] = true;
@@ -148,20 +148,51 @@ public:
         }
         return false;
     };
+
+    // Checking Graph is Bipartite Graph or Not
+    bool isBipartiteBFS(int source)
+    {
+        vector<int> colored(size, -1);
+        colored[source] = 1;
+        queue<int> q;
+        q.push(source);
+
+        while (!q.empty())
+        {
+            int temp = q.front();
+            q.pop();
+            for (auto i : l[temp])
+            {
+                if (colored[i] == colored[temp])
+                {
+                    return false;
+                }
+                if (colored[i] == -1)
+                {
+                    colored[i] = !colored[temp];
+                    q.push(i);
+                }
+            }
+        }
+
+        return true;
+    }
 };
 
 int main()
 {
     Graph p(7);
-    p.addEdge(4, 3);
-    p.addEdge(4, 6);
-    p.addEdge(5, 6);
-    p.addEdge(5, 3);
+    p.addEdge(0, 1);
+    p.addEdge(0, 3);
+    p.addEdge(2, 3);
+    p.addEdge(2, 1);
 
     p.printGraph();
-    // p.dfs(1);
+    p.dfs(1);
     // cout << p.bfsCycle();
-    cout << p.dfsCycle();
+    // cout << p.dfsCycle();
+    cout << endl
+         << p.isBipartiteBFS(1);
 
     return 0;
 };
