@@ -9,12 +9,15 @@ private:
     vector<int> *l;
 
 public:
+    // Graph Constructor
+    //  Note - Use second argument as false if use want to create directed graph
     Graph(int v, bool dir = true)
     {
         size = v;
         unDirected = dir;
         l = new vector<int>[v];
     }
+
     // adding edge
     void addEdge(int m, int n)
     {
@@ -24,6 +27,7 @@ public:
             l[n].push_back(m);
         }
     }
+
     // printing Graph
     void printGraph()
     {
@@ -38,6 +42,7 @@ public:
         }
     }
 
+    //                🧨🧨🧨Travesals🧨🧨🧨
     //  Breadth First Search (BFS)
     void bfs(int source)
     {
@@ -85,6 +90,7 @@ public:
         dfshelper(source, visited);
     }
 
+    //               🧨🧨🧨Cylce Detection🧨🧨🧨
     // Cylce Detection Using bfs
     bool bfsCycle()
     {
@@ -176,7 +182,6 @@ public:
 
         return false;
     };
-
     bool dfsCycleDirectedGraph()
     {
         vector<bool> visited(size, false);
@@ -194,6 +199,7 @@ public:
         return false;
     }
 
+    //                 🧨🧨🧨Bipartite Graph🧨🧨🧨
     // Checking Graph is Bipartite Graph or Not using bfs
     bool isBipartiteBFS(int source)
     {
@@ -222,8 +228,8 @@ public:
         return true;
     }
 
-    // Topological Sort Using DFS
-    // Note - TopoLogical only present when Graph is DAG.
+    //                🧨🧨🧨 Topological Sort 🧨🧨🧨
+    // Topological Sort Using DFS. Note - TopoLogical only present when Graph is DAG.
     void topologicalSortDfsHelper(int source, stack<int> &st, vector<bool> &visited)
     {
         visited[source] = true;
@@ -256,26 +262,126 @@ public:
         return topoList;
     }
 
+    // Topological Sort Using BFS (Kahn's Algorithm)
+    vector<int> topologicalSortBfs()
+    {
+        //  ---Kahn's Algorithm---
+        vector<int> inDegree(size, 0);
+        vector<int> topoList;
+        for (int i = 0; i < size; i++)
+        {
+            for (auto p : l[i])
+            {
+                inDegree[p]++;
+            }
+        }
+        queue<int> q;
+        for (int i = 0; i < size; i++)
+        {
+            if (inDegree[i] == 0)
+            {
+                q.push(i);
+            }
+        }
 
+        while (!q.empty())
+        {
+            topoList.push_back(q.front());
+            int node = q.front();
+            q.pop();
+            for (auto i : l[node])
+            {
+                inDegree[i]--;
+                if (inDegree[i] == 0)
+                {
+                    q.push(i);
+                }
+            }
+        }
+        return topoList;
+    }
+    bool bfsCycleDirectedGraph()
+    {
+        // we can also check bfsCycleDirectedGraph using Kanhs algo bcoz topologicalSortList not done in Kahn's Algorithm
+        vector<int> inDegree(size, 0);
+        for (int i = 0; i < size; i++)
+        {
+            for (auto p : l[i])
+            {
+                inDegree[p]++;
+            }
+        }
+        queue<int> q;
+        for (int i = 0; i < size; i++)
+        {
+            if (inDegree[i] == 0)
+            {
+                q.push(i);
+            }
+        }
+        int count = 0;
+        while (!q.empty())
+        {
+            count++;
+            int node = q.front();
+            q.pop();
+            for (auto i : l[node])
+            {
+                inDegree[i]--;
+                if (inDegree[i] == 0)
+                {
+                    q.push(i);
+                }
+            }
+        }
+        return count == size;
+    }
+
+    ///             🧨🧨🧨 Shortest Path (Un-Weighted Weighted=1🐧)🧨🧨🧨
+    // Shortest Path in Undirected Graph with Unit(1) Weights
+    vector<int> shortestPath(int source)
+    {
+        vector<int> distance(size, INT_MAX);
+        int length = 0;
+        distance[source] = 0;
+        queue<int> q;
+        q.push(source);
+        while (!q.empty())
+        {
+            int qsize = q.size();
+            int node = q.front();
+            q.pop();
+            for (auto i : l[node])
+            {
+                if (distance[node] + 1 < distance[i])
+                {
+                    q.push(i);
+                    distance[i] = distance[node] + 1;
+                }
+            }
+        }
+
+        return distance;
+    }
 };
 
 int main()
 {
-    Graph p(7, false); // for making directed use 2nd params as false
-    p.addEdge(1, 6);
-    p.addEdge(1, 5);
-    p.addEdge(5, 0);
-    p.addEdge(0, 6);
-    p.addEdge(0, 3);
-    p.addEdge(0, 2);
+    Graph p(6); // for making directed use 2nd params as false
+    p.addEdge(5, 1);
+    p.addEdge(5, 4);
+    p.addEdge(3, 1);
     p.addEdge(3, 4);
+    p.addEdge(3, 2);
+    p.addEdge(0, 1);
 
     p.printGraph();
 
-    vector<int> v = p.topologicalSortDfs();
-    for (auto i : v)
-    {
+    vector<int> shortestPath = p.shortestPath(5);
+    for (auto i : shortestPath)
         cout << i << " ";
-    }
+
+    // cout << endl
+    //      << p.shortestPath(5);
     return 0;
 };
