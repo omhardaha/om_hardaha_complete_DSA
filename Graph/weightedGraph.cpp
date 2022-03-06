@@ -145,20 +145,103 @@ public:
         return distance;
     }
 
-    //               🧨🧨🧨Minimum Spanning Tree 🧨🧨🧨
+    //                🧨🧨🧨 Minimum Spanning Tree 🧨🧨🧨
+    Graph PrimsAlgorithm(int head)
+    {
+        // Approach - Initially Select the Smallest One And Always Select the Connected Smallest One's
+        vector<int> perent(size, -1);
+        perent[0] = 0;
+        vector<int> distance(size, INT_MAX);
+        distance[0] = 0;
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> min_heap;
+        min_heap.push({0, 0});
+        vector<bool> visited(size, false);
+
+        while (!min_heap.empty())
+        {
+            int p = min_heap.top().second;
+            min_heap.pop();
+            visited[p] = true;
+            int diss = 0;
+            for (auto i : l[p])
+            {
+                int node = i.first;
+                if (!visited[node] && distance[node] > i.second)
+                {
+                    distance[node] = i.second;
+                    min_heap.push({i.second, node});
+                    perent[node] = p;
+                }
+            }
+        }
+        // calculate all distance
+        // int ans = 0;
+        // for (int i = 0; i < size; i++)
+        // {
+        //     ans += distance[i];
+        // }
+        // return ans;
+
+        Graph m(size);
+        for (int i = 0; i < perent.size(); i++)
+        {
+            if (i != head)
+            {
+                m.addEdge(i, perent[i], distance[i]);
+            }
+        }
+        return m;
+    }
+
+    int minSpanningTree()
+    {
+        vector<int> perent(size, -1);
+        perent[0] = 0;
+        vector<int> distance(size, INT_MAX);
+        distance[0] = 0;
+        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> min_heap;
+        min_heap.push({0, 0});
+        vector<bool> visited(size, false);
+
+        while (!min_heap.empty())
+        {
+            int p = min_heap.top().second;
+            min_heap.pop();
+            visited[p] = true;
+            int diss = 0;
+            for (auto i : l[p])
+            {
+                int node = i.first;
+                if (!visited[node] && distance[node] > i.second)
+                {
+                    distance[node] = i.second;
+                    min_heap.push({i.second, node});
+                    perent[node] = p;
+                }
+            }
+        }
+        // calculate all distance
+        int ans = 0;
+        for (int i = 0; i < size; i++)
+        {
+            ans += distance[i];
+        }
+        return ans;
+    }
+    
+    
 };
+
 int main()
 {
     Graph p(7);         // for making directed use 2nd params as false
-    p.addEdge(1, 5, 4); // v,u, & weight
-    p.addEdge(1, 2, 1);
-    p.addEdge(2, 3, 9);
-    p.addEdge(5, 6, 3);
-    p.addEdge(5, 4, 6);
+    p.addEdge(0, 1, 3); // v,u, & weight
+    p.addEdge(1, 3, 3);
+    p.addEdge(1, 5, 10);
+    p.addEdge(2, 4, 6);
+    p.addEdge(2, 6, 9);
+    p.addEdge(3, 6, 8);
+    p.addEdge(4, 5, 6);
 
-    p.printGraph();
-    vector<int> m = p.DijkstrasAlgorithmShortestPathInUndirectedGraphs(1);
-    for (auto i : m)
-        cout << i << " ";
     return 0;
-}
+};

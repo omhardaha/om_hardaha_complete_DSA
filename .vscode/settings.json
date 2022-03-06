@@ -11,8 +11,9 @@
     "cmath": "cpp",
     "deque": "cpp",
     "list": "cpp",
-    "vector": "cpp"
-  },
+    "vector": "cpp",
+    "new": "cpp"
+},
   "C_Cpp_Runner.cCompilerPath": "C:/Program Files/MinGW/mingw32/bin/gcc.exe",
   "C_Cpp_Runner.cppCompilerPath": "C:/Program Files/MinGW/mingw32/bin/g++.exe",
   "C_Cpp_Runner.debuggerPath": "C:/Program Files/MinGW/mingw32/bin/gdb.exe",

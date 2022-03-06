@@ -363,23 +363,40 @@ public:
 
         return distance;
     }
+
+    void dfsHelperBridges(vector<pair<int, int>> bridgesEdges, vector<bool> visited,vector<int> low,vector<int> insertTime,int perent)
+    {
+        visited[perent] = true;
+        
+    }
+    vector<pair<int, int>> bridges()
+    {
+        vector<pair<int, int>> bridgesEdges;
+        vector<bool> visited(size,false);
+        vector<int> low(size);
+        vector<int> insertTime(size);
+
+        dfsHelperBridges(bridgesEdges,visited,low,insertTime,0);
+        return bridgesEdges;
+    }
 };
 
 int main()
 {
-    Graph p(6); // for making directed use 2nd params as false
-    p.addEdge(5, 1);
-    p.addEdge(5, 4);
-    p.addEdge(3, 1);
-    p.addEdge(3, 4);
-    p.addEdge(3, 2);
+    Graph p(7); // for making directed use 2nd params as false
     p.addEdge(0, 1);
+    p.addEdge(0, 3);
+    p.addEdge(0, 4);
+    p.addEdge(5, 4);
+    p.addEdge(5, 3);
+    p.addEdge(5, 6);
+    p.addEdge(4, 2);
 
     p.printGraph();
 
-    vector<int> shortestPath = p.shortestPath(5);
-    for (auto i : shortestPath)
-        cout << i << " ";
+    vector<pair<int, int>> brig = p.bridges();
+    for (auto i : brig)
+        cout << i.first << " " << i.second << endl;
 
     // cout << endl
     //      << p.shortestPath(5);
