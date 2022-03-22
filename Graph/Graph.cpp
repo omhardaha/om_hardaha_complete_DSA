@@ -364,33 +364,65 @@ public:
         return distance;
     }
 
-    void dfsHelperBridges(vector<pair<int, int>> bridgesEdges, vector<bool> visited,vector<int> low,vector<int> insertTime,int perent)
+    void dfsHelperBridges(vector<pair<int, int>> &bridgesEdges, vector<bool> &visited, vector<int> &low, vector<int> &insertTime, int i, int &count, int perent)
     {
-        visited[perent] = true;
-        
+        visited[i] = true;
+        low[i] = insertTime[i] = ++count;
+        for (auto node : l[i])
+        {
+            if(node == perent) continue;
+            if (!visited[node])
+            {
+                dfsHelperBridges(bridgesEdges, visited, low, insertTime, node, count, i);
+                low[i] = min(low[i],low[node] );
+                if (low[node] > low[i])
+                {
+                    bridgesEdges.push_back({node, i});
+                }
+            }
+            else{
+                low[i] = min(low[i],insertTime[node] );
+            }
+        }
     }
     vector<pair<int, int>> bridges()
     {
         vector<pair<int, int>> bridgesEdges;
-        vector<bool> visited(size,false);
-        vector<int> low(size);
-        vector<int> insertTime(size);
-
-        dfsHelperBridges(bridgesEdges,visited,low,insertTime,0);
+        vector<bool> visited(size, false);
+        vector<int> low(size,INT_MAX);
+        vector<int> insertTime(size,INT_MAX);
+        int count = 0;
+        dfsHelperBridges(bridgesEdges, visited, low, insertTime, 0, count, 0);
         return bridgesEdges;
     }
 };
 
 int main()
 {
-    Graph p(7); // for making directed use 2nd params as false
-    p.addEdge(0, 1);
-    p.addEdge(0, 3);
-    p.addEdge(0, 4);
-    p.addEdge(5, 4);
-    p.addEdge(5, 3);
-    p.addEdge(5, 6);
-    p.addEdge(4, 2);
+    Graph p(9); // for making directed use 2nd params as false
+    // p.addEdge(0, 1);
+    // p.addEdge(0, 3);
+    // p.addEdge(0, 4);
+    // p.addEdge(5, 4);
+    // p.addEdge(5, 3);
+    // p.addEdge(5, 6);
+    // p.addEdge(4, 2);
+    // p.addEdge(0, 1);
+    
+    p.addEdge(0, 2);
+    p.addEdge(1, 4);
+    p.addEdge(1, 5);
+    p.addEdge(2, 3);
+    p.addEdge(2, 4);
+    p.addEdge(4, 5);
+    p.addEdge(3, 0);
+    p.addEdge(6, 3);
+    p.addEdge(6, 7);
+    p.addEdge(8, 7);
+    p.addEdge(6, 8);
+    p.addEdge(8, 2);
+
+
 
     p.printGraph();
 

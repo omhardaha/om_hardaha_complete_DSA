@@ -29,6 +29,6 @@ int main()
   permutations(s, ans); // number of permutation = factorial n
 
   for (auto i : ans)
-    cout << i << "       ";
+    cout << i << " ";
   return 0;
 }
