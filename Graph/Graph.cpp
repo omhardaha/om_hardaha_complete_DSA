@@ -370,18 +370,20 @@ public:
         low[i] = insertTime[i] = ++count;
         for (auto node : l[i])
         {
-            if(node == perent) continue;
+            if (node == perent)
+                continue;
             if (!visited[node])
             {
                 dfsHelperBridges(bridgesEdges, visited, low, insertTime, node, count, i);
-                low[i] = min(low[i],low[node] );
+                low[i] = min(low[i], low[node]);
                 if (low[node] > low[i])
                 {
                     bridgesEdges.push_back({node, i});
                 }
             }
-            else{
-                low[i] = min(low[i],insertTime[node] );
+            else
+            {
+                low[i] = min(low[i], insertTime[node]);
             }
         }
     }
@@ -389,8 +391,8 @@ public:
     {
         vector<pair<int, int>> bridgesEdges;
         vector<bool> visited(size, false);
-        vector<int> low(size,INT_MAX);
-        vector<int> insertTime(size,INT_MAX);
+        vector<int> low(size, INT_MAX);
+        vector<int> insertTime(size, INT_MAX);
         int count = 0;
         dfsHelperBridges(bridgesEdges, visited, low, insertTime, 0, count, 0);
         return bridgesEdges;
@@ -408,7 +410,7 @@ int main()
     // p.addEdge(5, 6);
     // p.addEdge(4, 2);
     // p.addEdge(0, 1);
-    
+
     p.addEdge(0, 2);
     p.addEdge(1, 4);
     p.addEdge(1, 5);
@@ -421,8 +423,6 @@ int main()
     p.addEdge(8, 7);
     p.addEdge(6, 8);
     p.addEdge(8, 2);
-
-
 
     p.printGraph();
 
