@@ -1,66 +1,53 @@
 #include <bits/stdc++.h>
 using namespace std;
-vector<int> arr(4);
-bool check(int a, int b)
+class SegmentTreeMin
 {
-    bool flag = true;
-    if ((a + b) != arr[0] && (a + b) != arr[1] && (a + b) != arr[2] && (a + b) != arr[3])
+    vector<int> arr;
+    vector<int> seg;
+    int low = 0;
+    int high = 0;
+
+private:
+    int build(int i, int low, int high)
     {
-        flag = false;
+        if (low == high)
+        {
+            return seg[i] = arr[low];
+        }
+        int mid = (low + high) / 2;
+        return seg[i] = min(build(i * 2 + 1, low, mid), build(i * 2 + 2, mid + 1, high));
     }
-    if ((a - b) != arr[0] && (a - b) != arr[1] && (a - b) != arr[2] && (a - b) != arr[3])
+
+public:
+    SegmentTreeMin(vector<int> arr1)
     {
-        flag = false;
+        seg = vector<int>(4 * arr1.size(), INT_MAX);
+        arr = arr1;
+        high = arr1.size() - 1;
+        build(0, low, high);
     }
-    if ((a * b) != arr[0] && (a * b) != arr[1] && (a * b) != arr[2] && (a * b) != arr[3])
+    int rangMinHelper(int i, int low, int high, int l, int r)
     {
-        flag = false;
+        if (low >= l && high <= r)
+        {
+            return seg[i];
+        }
+        if (high < l || low > r)
+        {
+            return INT_MAX;
+        }
+        int mid = (low + high) / 2;
+        return min(rangMinHelper(i * 2 + 1, low, mid, l, r), rangMinHelper(i * 2 + 2, mid + 1, high, l, r));
     }
-    if ((a / b) != arr[0] && (a / b) != arr[1] && (a / b) != arr[2] && (a / b) != arr[3])
+    int rangMin(int l, int r)
     {
-        flag = false;
+        return rangMinHelper(0, low, high, l, r);
     }
-    return flag;
-}
+};
 int main()
 {
-    int t;
-    cin >> t;
-    while (t--)
-    {
-        int ansa = -1;
-        int ansb = -1;
-        cin >> arr[0] >> arr[1] >> arr[2] >> arr[3];
-        bool flag = false;
-        for (int i = 0; i <= 3; i++)
-        {
-            // cout << "rrrrr" << endl;
-            for (int k = 0; k <= 3; k++)
-            {
-                // cout << "yyyy" << endl;
-                if (k != i)
-                {
-                    int a = (arr[i] + arr[k]) / 2;
-                    int b = arr[i] - a;
-                    // cout << a << endl;
-                    // cout << b << endl;
-                    if (check(a, b))
-                    {
-                        ansa = a;
-                        ansb = b;
-                        flag = true;
-                    };
-                }
-            }
-        }
-        if (flag)
-        {
-            cout << ansa << " " << ansb << endl;
-        }
-        else
-        {
-            cout << -1 << " " << -1 << endl;
-        }
-    }
+    vector<int> arr = {10, 12, 3, 6, 3, 5, 9, 2, 5, 46};
+    SegmentTreeMin seg(arr);
+    cout << seg.rangMin(7, 9);
     return 0;
 }
