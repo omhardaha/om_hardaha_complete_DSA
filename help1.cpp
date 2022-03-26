@@ -1,11 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
-// https://practice.geeksforgeeks.org/problems/sum-of-query-ii5310/1/#
-class SegmentTreeSum
+
+class SegmentTreeSumWithLazyUpdates
+// also calles as Lazy Propagation in Segment Tree
 {
 private:
     vector<int> arr;
     vector<int> seg;
+    vector<int> lazy;
     int low = 0;
     int high = 0;
 
@@ -48,10 +50,45 @@ private:
         return seg[index] = updateIndexSumHelper(2 * index + 1, i, low, mid, val) + updateIndexSumHelper(2 * index + 2, i, mid + 1, high, val);
     }
 
+    int rangeSumUpdateHelper(int index, int low, int high, int l, int r, int val)
+    {
+        if (high < l || low > r)
+        {
+
+            return seg[index];
+        }
+        int mid = (low + high) / 2;
+        if (low >= l && high <= r)
+        {
+            seg[index] += (lazy[index] * (high - low + 1));
+            if (low != high)
+            {
+                lazy[index * 2 + 1] += lazy[index];
+                lazy[index * 2 + 2] += lazy[index];
+            }
+            lazy[index] = 0;
+            if (low == high) // last node
+            {
+                seg[index] += lazy[index] + val;
+                return seg[index];
+            }
+            else
+            {
+                lazy[index * 2 + 1] += val;
+                lazy[index * 2 + 2] += val;
+                seg[index] += (val * (high - low + 1));
+                return seg[index];
+            }
+        }
+        return seg[index] = rangeSumUpdateHelper(2 * index + 1, low, mid, l, r, val) +
+                            rangeSumUpdateHelper(2 * index + 2, mid + 1, high, l, r, val);
+    }
+
 public:
-    SegmentTreeSum(vector<int> arr1)
+    SegmentTreeSumWithLazyUpdates(vector<int> arr1)
     {
         seg = vector<int>(4 * arr1.size(), 0);
+        lazy = vector<int>(4 * arr1.size(), 0);
         arr = arr1;
         high = arr1.size() - 1;
         build(0, low, high);
@@ -65,12 +102,18 @@ public:
     {
         updateIndexSumHelper(0, i, low, high, val);
     }
+    void rangeSumUpdate(int l, int r, int val)
+    {
+        rangeSumUpdateHelper(0, low, high, l, r, val);
+    }
 };
 int main()
 {
     vector<int> arr = {10, 12, 3, 6, 3, 5, 9, 2, 5, 46};
-    SegmentTreeSum seg(arr);
-    // seg.updateIndexSum(0, 10);
-    cout << seg.rangeSum(2,7);
+    SegmentTreeSumWithLazyUpdates seg(arr);
+    // cout << seg.rangeSum(0,5) << endl;
+    seg.rangeSumUpdate(0, 5, 10);
+    // seg.rangeSumUpdate(3, 5, 5);
+    cout << seg.rangeSum(5, 8) << endl;
     return 0;
 }

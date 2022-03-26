@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 vector<int> fenWick(10);
-void update(int i , int)
+void update(int i, int)
 {
-
+    
 }
 int main()
 {
