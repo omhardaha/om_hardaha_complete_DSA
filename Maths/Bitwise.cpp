@@ -1,134 +1,114 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool isODD(int n)
-{
 
-    return (n & 1) == 1;
-
-    //  Example 7 & 1
-    //   0111 (7)
-    // & 0001 (1)
-    // ans = 0001 (5) this give the last digit
-
-    //  Example 8 & 1
-    //   1000 (7)
-    // & 0001 (1)
-    // ans = 0000 (0)
-}
-
-int FindNonRepeatingNumInArray(vector<int> s)
-{
-    int k = s[0];
-    for (int i = 1; i < s.size(); i++) k ^= s[i]; 
-    return k;
-    // {1, 2, 3, 4, 5, 1, 3, 4, 5} ans = 2
-    // 1^2^3^4^5^1^3^4^5 = 2
-     // bcoz 1^1 = 0 ;
-     // bcoz 2^0 = 2 ;
-     // bcoz 3^3 = 0 ;
-     // bcoz 4^4 = 0 ;
-     // bcoz 5^5 = 0 ;
-}
 
 int FindNonRepeatingNumInArrayMoreThan2Number(vector<int> s)
 {
     int bits[32] = {0};
     int bitsofMinus[32] = {0};
-    int base ;
+    int base;
     int ans = 0;
-    for(auto num : s){
+    for (auto num : s)
+    {
         base = 0;
-        while (num>0)
+        while (num > 0)
         {
-             if(num&1) bits[base]++;
-           num= num>>1;
-             base++;       
+            if (num & 1)
+                bits[base]++;
+            num = num >> 1;
+            base++;
         }
         num = abs(num);
-        while (num>0)
+        while (num > 0)
         {
-           if(num&1) bitsofMinus[base]++;
-           num= num>>1;
-           base++;       
+            if (num & 1)
+                bitsofMinus[base]++;
+            num = num >> 1;
+            base++;
         }
     }
 
-    for (int i = 0; i <32; i++){
-        ans += (bits[i] % 3) * pow(2,i);
-    }; 
+    for (int i = 0; i < 32; i++)
+    {
+        ans += (bits[i] % 3) * pow(2, i);
+    };
 
-    if(ans==0){
+    if (ans == 0)
+    {
 
-     for (int i = 0; i <32; i++){
-        ans += (bitsofMinus[i] % 3) * pow(2,i);
-    };   
-ans = -ans;
+        for (int i = 0; i < 32; i++)
+        {
+            ans += (bitsofMinus[i] % 3) * pow(2, i);
+        };
+        ans = -ans;
     }
-     return ans;
+    return ans;
 }
 
-int FindIthBIT(int n, int ith){
+int FindIthBIT(int n, int ith)
+{
 
-    int bitIth = (1<<(ith-1));
+    int bitIth = (1 << (ith - 1));
 
-return (n& bitIth) == bitIth ;
+    return (n & bitIth) == bitIth;
 
-// if n = 27
-//  11011 (27)
-//  for finding 3rd bit 
-//     11011
-//   & 00100
-//   ---------
-//     00000   == 1<<(3-1) then ans = 1 else 0
-//  for finding 2rd bit 
-//     11011
-//   & 00010
-//   ---------
-//     00010  == 1<<(2-1) then ans = 1 else 0
+    // if n = 27
+    //  11011 (27)
+    //  for finding 3rd bit
+    //     11011
+    //   & 00100
+    //   ---------
+    //     00000   == 1<<(3-1) then ans = 1 else 0
+    //  for finding 2rd bit
+    //     11011
+    //   & 00010
+    //   ---------
+    //     00010  == 1<<(2-1) then ans = 1 else 0
 }
 
-int SetIthBIT(int n, int ith){
+int SetIthBIT(int n, int ith)
+{
 
-    int bitIth = (1<<(ith-1));
+    int bitIth = (1 << (ith - 1));
 
-return (n | bitIth) ;
+    return (n | bitIth);
 
-// if n = 27
-//  11011 (27)
+    // if n = 27
+    //  11011 (27)
 
-//  set  3rd bit 
-//        11011
-// | (or) 00100 (ith bit)
-//   ---------------------
-//        11111   = ans
+    //  set  3rd bit
+    //        11011
+    // | (or) 00100 (ith bit)
+    //   ---------------------
+    //        11111   = ans
 
-//  set  2nd bit 
-//        11011
-// | (or) 00010 (ith bit)
-//   ---------------------
-//        11011   = ans
+    //  set  2nd bit
+    //        11011
+    // | (or) 00010 (ith bit)
+    //   ---------------------
+    //        11011   = ans
 }
 
-int ResetIthBIT(int n, int ith){
+int ResetIthBIT(int n, int ith)
+{
+    int bitIth = ~(1 << (ith - 1));
+    return (n & bitIth);
 
-    int bitIth = ~(1<<(ith-1));
-return (n & bitIth) ;
+    // if n = 27
+    //  11011 (27)
 
-// if n = 27
-//  11011 (27)
+    //  reset  3rd bit
+    //         11011
+    // & (and) 11011 (ith bit)
+    //   ---------------------
+    //        11011   = ans
 
-//  reset  3rd bit 
-//         11011
-// & (and) 11011 (ith bit)
-//   ---------------------
-//        11011   = ans
-
-//  reset  2nd bit 
-//         11011
-// & (and) 11101 (ith bit)
-//   ---------------------
-//         11001   = ans
+    //  reset  2nd bit
+    //         11011
+    // & (and) 11101 (ith bit)
+    //   ---------------------
+    //         11001   = ans
 }
 
 int main()
@@ -183,20 +163,20 @@ int main()
     //      ------Compliment Of a Number------
     // cout << (~27) +1;
 
-        //  ------Compliment Of a Number------
+    //  ------Compliment Of a Number------
     // cout << (1^2^1^3^2^5) ;
 
     //  ------Find No of digit in base b------
-        // 10 have 4 digit
-        // 7 hv 3
-        // 64 hv 5
-        // int numberOfDigit = log2(10) +1;
-        // cout << numberOfDigit ;
-        int n=46;
-string s = to_string(n);
-        sort(s.rbegin(),s.rend());
-        n = stoi(s);
-cout<<n;
+    // 10 have 4 digit
+    // 7 hv 3
+    // 64 hv 5
+    // int numberOfDigit = log2(10) +1;
+    // cout << numberOfDigit ;
+    int n = 46;
+    string s = to_string(n);
+    sort(s.rbegin(), s.rend());
+    n = stoi(s);
+    cout << n;
 
     return 0;
 }

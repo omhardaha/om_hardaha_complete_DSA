@@ -115,11 +115,12 @@ public:
 };
 int main()
 {
-    vector<int> arr = {10, 12, 3, 6, 3, 5, 9, 2, 5, 46};
+    // vector<int> arr = {10, 12, 3, 6, 3, 5, 9, 2, 5, 46};
+    vector<int> arr = {2, 3, 1, 1, 5, 3};
     SegmentTreeSumWithLazyUpdates seg(arr);
     // cout << seg.rangeSum(0,5) << endl;
-    seg.rangeSumUpdate(0, 5, 10);
+    // seg.rangeSumUpdate(0, 5, 10);
     // seg.rangeSumUpdate(3, 5, 5);
-    cout << seg.rangeSum(5, 8) << endl;
+    cout << seg.rangeSum(2, 4) << endl;
     return 0;
 }
