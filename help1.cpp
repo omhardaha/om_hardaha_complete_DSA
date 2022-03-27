@@ -2,7 +2,7 @@
 using namespace std;
 // https://leetcode.com/problems/implement-trie-prefix-tree
 
-class Trie
+class Trie 
 {
 public:
     struct Node
