@@ -1,11 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
-class WordDictionary
+// https://leetcode.com/problems/implement-trie-prefix-tree
+class Trie
 {
 public:
     struct Node
     {
-        Node *links[26];
+        Node *links[52];
         bool flag = false;
         bool containsKey(char key)
         {
@@ -29,12 +30,12 @@ public:
         }
     };
     Node *root;
-    WordDictionary()
+    Trie()
     {
         root = new Node();
     }
 
-    void addWord(string word)
+    void insert(string word)
     {
         Node *p = root;
         for (char key : word)
@@ -50,50 +51,30 @@ public:
 
     bool search(string word)
     {
-        return advanceSearchHelper(word, 0, root);
-    }
-    bool advanceSearchHelper(string &word, int i, Node *dummy)
-    {
-        if (word.size() == i)
+        Node *p = root;
+        for (char key : word)
         {
-            return dummy->hasEnd();
-        }
-        if (word[i] != '.')
-        {
-            if (dummy->containsKey(word[i]))
-            {
-                if (advanceSearchHelper(word, i + 1, dummy->getNode(word[i])))
-                {
-                    return true;
-                }
-            }
-            else
+            if (!p->containsKey(key))
             {
                 return false;
             }
+            p = p->getNode(key);
         }
-        else
-        {
-            for (auto node : dummy->links)
-            {
-                if (node)
-                {
-                    if (advanceSearchHelper(word, i + 1, node))
-                    {
-                        return true;
-                    };
-                }
-            }
-        }
-        return false;
+        return p->hasEnd();
     }
 };
 
 int main()
 {
-    WordDictionary om;
-    om.addWord("fgfdgdfgfd");
-    om.addWord("fgfdgdfgfd");
-    cout << om.search("f..dgdfg..");
+
+    Trie Dictionary;
+    Dictionary.insert("javascripts");
+    Dictionary.insert("FooBar");
+    Dictionary.insert("FooBarTest");
+    Dictionary.insert("FootBall");
+    Dictionary.insert("FrameBuffer");
+    Dictionary.insert("ForceFeedBack");
+
+    cout << Dictionary.search("FootBall") << endl;
     return 0;
 }

@@ -1,34 +1,34 @@
 #include <bits/stdc++.h>
 using namespace std;
 // https://leetcode.com/problems/implement-trie-prefix-tree
-struct Node
-{
-    Node *links[26];
-    bool flag = false;
-    bool containsKey(char key)
-    {
-        return links[key - 'a'];
-    }
-    bool hasEnd()
-    {
-        return flag;
-    }
-    Node *getNode(char key)
-    {
-        return links[key - 'a'];
-    }
-    void put(char key)
-    {
-        links[key - 'a'] = new Node();
-    }
-    void setEnd()
-    {
-        flag = true;
-    }
-};
 class Trie
 {
 public:
+    struct Node
+    {
+        Node *links[26];
+        bool flag = false;
+        bool containsKey(char key)
+        {
+            return links[key - 'a'];
+        }
+        bool hasEnd()
+        {
+            return flag;
+        }
+        Node *getNode(char key)
+        {
+            return links[key - 'a'];
+        }
+        void put(char key)
+        {
+            links[key - 'a'] = new Node();
+        }
+        void setEnd()
+        {
+            flag = true;
+        }
+    };
     Node *root;
     Trie()
     {
@@ -83,17 +83,14 @@ public:
     }
     bool advanceSearchHelper(string &word, int i, Node *dummy)
     {
-        cout << word[i] << " ";
         if (word.size() == i)
         {
-            cout << "finish" << endl;
             return dummy->hasEnd();
         }
         if (word[i] != '.')
         {
             if (dummy->containsKey(word[i]))
             {
-                cout << "containsKey" << endl;
                 if (advanceSearchHelper(word, i + 1, dummy->getNode(word[i])))
                 {
                     return true;
@@ -101,7 +98,6 @@ public:
             }
             else
             {
-                cout << "not containsKey" << endl;
                 return false;
             }
         }
