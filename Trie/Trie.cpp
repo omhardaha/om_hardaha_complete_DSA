@@ -76,6 +76,50 @@ public:
         }
         return true;
     }
+
+    bool advanceSearch(string word)
+    {
+        return advanceSearchHelper(word, 0, root);
+    }
+    bool advanceSearchHelper(string &word, int i, Node *dummy)
+    {
+        cout << word[i] << " ";
+        if (word.size() == i)
+        {
+            cout << "finish" << endl;
+            return dummy->hasEnd();
+        }
+        if (word[i] != '.')
+        {
+            if (dummy->containsKey(word[i]))
+            {
+                cout << "containsKey" << endl;
+                if (advanceSearchHelper(word, i + 1, dummy->getNode(word[i])))
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                cout << "not containsKey" << endl;
+                return false;
+            }
+        }
+        else
+        {
+            for (auto node : dummy->links)
+            {
+                if (node)
+                {
+                    if (advanceSearchHelper(word, i + 1, node))
+                    {
+                        return true;
+                    };
+                }
+            }
+        }
+        return false;
+    }
 };
 
 int main()
@@ -85,11 +129,11 @@ int main()
     // Dictionary.insert("men");
     // Dictionary.insert("dog");
     // Dictionary.insert("tree");
-    Dictionary.insert("javascript");
+    Dictionary.insert("javascripts");
     Dictionary.insert("hpp");
 
-    cout << Dictionary.search("hpp") << endl;
-    cout << Dictionary.search("nodejs") << endl;
-    cout << Dictionary.startsWith("git") << endl;
+    cout << Dictionary.advanceSearch(".p.") << endl;
+    // cout << Dictionary.advanceSearch("javascript") << endl;
+    // cout << Dictionary.startsWith("git") << endl;
     return 0;
 }
