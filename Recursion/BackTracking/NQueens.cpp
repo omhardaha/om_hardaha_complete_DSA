@@ -5,6 +5,7 @@ bool isSafe(vector<string> &NQueens, int r, int c)
 {
  // for upper row
  for (int i = r; i >= 0; i--)
+ 
  {
   if (NQueens[i][c] == 'Q')
    return false;
