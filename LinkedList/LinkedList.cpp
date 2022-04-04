@@ -82,6 +82,67 @@ public:
         }
         head = previous;
     }
+    void swapPairs()
+    {
+        if (!head || !head->next)
+            return ;
+
+        // 1. swapping head and head->next
+        ListNode *p = head;
+        head = head->next;
+        p->next = head->next;
+        head->next = p;
+
+        // 2. make previous , current , next
+        ListNode *previous = nullptr;
+        ListNode *current = nullptr;
+        ListNode *next = nullptr;
+
+        previous = head->next;
+
+        if (previous->next)
+        {
+            current = previous->next;
+        }
+        else
+        {
+            return ;
+        }
+
+        if (current->next)
+        {
+            next = current->next;
+        }
+        else
+        {
+            return ;
+        }
+
+        while (true)
+        {
+            previous->next = next;
+            current->next = next->next;
+            next->next = current;
+
+            previous = current;
+            if (previous->next)
+            {
+                current = previous->next;
+            }
+            else
+            {
+                return ;
+            }
+            if (current->next)
+            {
+                next = current->next;
+            }
+            else
+            {
+                return ;
+            }
+        }
+    }
 };
 
 int main()
@@ -91,7 +152,11 @@ int main()
     ll.insert(15);
     ll.insert(35);
     ll.insert(54);
-    ll.reverse2();
+    ll.insert(2);
+    ll.insert(5564);
+    ll.traverse();
+    ll.swapPairs();
+
     ll.traverse();
 
     return 0;
