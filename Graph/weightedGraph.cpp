@@ -88,63 +88,6 @@ public:
         return st;
     }
 
-    //           🧨🧨🧨 Shortest Path (Weighted) 🧨🧨🧨
-    //   1. Topological Sort Methods
-    vector<int> shortestPathInDAG(int source = 0)
-    {
-        //  for finding Shortest Path In Weighted Directed ACyclicGraphs
-        //  Time Complexity = O(V + E)
-        stack<int> topoStack = topologicalSortDfsStack();
-        vector<int> distance(size, INT_MAX);
-        distance[source] = 0;
-        while (!topoStack.empty())
-        {
-            int node = topoStack.top();
-            topoStack.pop();
-            if (distance[node] != INT_MAX)
-            {
-                for (auto i : l[node])
-                {
-                    if (distance[i.first] > i.second + distance[node])
-                    {
-                        distance[i.first] = i.second + distance[node];
-                    }
-                }
-            }
-        }
-        return distance;
-    }
-
-    //   2. Bellman-Ford
-    //  Time Complexity =  O(VE)
-
-    //  3. Dijkstra's Algorithm
-    vector<int> DijkstrasAlgorithmShortestPathInUndirectedGraphs(int source = 0)
-    {
-        //  for finding Shortest Path In Weighted Undirected Graphs
-        //  Note - Dijkstra's Algorithm not works for negetive Weight
-        //  Time Complexity = O(E + Vlog(V))
-        vector<int> distance(size, INT_MAX);
-        distance[source] = 0;
-        priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> min_heap;
-        min_heap.push({0, source});
-        while (!min_heap.empty())
-        {
-            int node = min_heap.top().second;
-            int pathLength = min_heap.top().first;
-            min_heap.pop();
-            for (auto i : l[node])
-            {
-                if (distance[i.first] > pathLength + i.second)
-                {
-                    distance[i.first] = pathLength + i.second;
-                    min_heap.push({distance[i.first], i.first});
-                }
-            }
-        }
-        return distance;
-    }
-
     //                🧨🧨🧨 Minimum Spanning Tree 🧨🧨🧨
     Graph PrimsAlgorithm(int head)
     {
@@ -193,7 +136,7 @@ public:
         return m;
     }
 
-    int minSpanningTree()
+    int PrimsAlgorithmMinSpanningTree()
     {
         vector<int> perent(size, -1);
         perent[0] = 0;
