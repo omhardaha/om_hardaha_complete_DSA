@@ -19,6 +19,7 @@ int frogJumpDP(vector<int> &nums, int i, vector<int> &dp)
     int right = frogJumpDP(nums, i - 1, dp) + abs(nums[i] - nums[i - 1]);
     return dp[i] = min(left, right);
 }
+
 int frogJumpTab(vector<int> &nums)
 {
     vector<int> dp(nums.size(), 0);
@@ -34,12 +35,33 @@ int frogJumpTab(vector<int> &nums)
     }
     return dp[dp.size() - 1];
 }
+
+int frogJumpKTab(vector<int> &nums, int k)
+{
+    vector<int> dp(nums.size(), 0);
+    dp[0] = 0; // base case
+    for (int i = 1; i < dp.size(); i++)
+    {
+        int left = INT_MAX;
+        for (int j = 1; j <= k; j++)
+        {
+            if (i - j >= 0)
+            {
+                left = min(left, dp[i - j] + abs(nums[i] - nums[i - j]));
+            }
+            dp[i] = left;
+        }
+    }
+    return dp[dp.size() - 1];
+}
+
 int main()
 {
     // vector<int> nums = {10, 20, 30, 10};
-    vector<int> nums = {4, 8, 3, 10, 4, 4};
+    vector<int> nums = {10, 30, 40, 50, 20};
     vector<int> dp(nums.size(), -1);
     // cout << frogJumpDP(nums, nums.size() - 1, dp);
-    cout << frogJumpTab(nums);
+    // cout << frogJumpTab(nums);
+    cout << frogJumpKTab(nums, 3);
     return 0;
 }

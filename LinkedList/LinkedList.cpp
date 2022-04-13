@@ -85,7 +85,7 @@ public:
     void swapPairs()
     {
         if (!head || !head->next)
-            return ;
+            return;
 
         // 1. swapping head and head->next
         ListNode *p = head;
@@ -106,7 +106,7 @@ public:
         }
         else
         {
-            return ;
+            return;
         }
 
         if (current->next)
@@ -115,7 +115,7 @@ public:
         }
         else
         {
-            return ;
+            return;
         }
 
         while (true)
@@ -131,7 +131,7 @@ public:
             }
             else
             {
-                return ;
+                return;
             }
             if (current->next)
             {
@@ -139,9 +139,14 @@ public:
             }
             else
             {
-                return ;
+                return;
             }
         }
+    }
+    
+    void MergeSort()
+    {
+        
     }
 };
 
