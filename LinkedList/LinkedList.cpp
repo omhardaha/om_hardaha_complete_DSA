@@ -64,7 +64,7 @@ public:
         head = reverseHelper(head);
     }
 
-    void reverse2()
+    ListNode *reverse2()
     {
         if (!head || !head->next)
         {
@@ -80,7 +80,7 @@ public:
             previous = cureent;
             cureent = next;
         }
-        head = previous;
+        return head = previous;
     }
     void swapPairs()
     {
@@ -143,10 +143,9 @@ public:
             }
         }
     }
-    
+
     void MergeSort()
     {
-        
     }
 };
 
