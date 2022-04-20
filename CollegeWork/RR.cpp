@@ -47,5 +47,7 @@ int main()
         TAT[i] = BT[i] + WT[i];
         cout << i + 1 << "   " << BT[i] << "   " << WT[i] << "   " << TAT[i] << endl;
     }
+
+    cout << "Average Waiting Time is - " << (float)TotalWT / (float)n;
     return 0;
 }
