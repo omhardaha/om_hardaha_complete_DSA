@@ -43,7 +43,12 @@ int main()
     //     int right = solve(grid,dp,i,j+1);
     //     return dp[i][j] =grid[i][j] + min(left,right);
     // }
+
+    // 2d
     //   vector<vector<int>> dp(grid.size(), vector<int>(grid[0].size(),-1));
+
+    // 3d
+    //   vector<vector<vector<int>>> dp(grid.size(), vector<vector<int>>(grid[0].size(), vector<int>(grid[0].size(), -1)));
     //   return solve(grid,dp,0);
 
     // sort(grid.begin(), grid.end());
