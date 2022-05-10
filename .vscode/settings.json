@@ -104,5 +104,6 @@
     " **/*.exe ": true,
     " **/*.gitignore ": true,
     " **/*.gitattributes ": true
-  }
+},
+"git.enabled": false
 }

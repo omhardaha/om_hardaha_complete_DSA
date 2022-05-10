@@ -6,7 +6,7 @@ class Graph
 private:
     int size;
     bool unDirected;
-    vector<int> *l;
+    vector<vector<int>> l;
 
 public:
     // Graph Constructor
@@ -15,7 +15,7 @@ public:
     {
         size = v;
         unDirected = dir;
-        l = new vector<int>[v];
+        l = vector< vector<int> >(size);
     }
 
     // adding edge
@@ -414,21 +414,21 @@ int main()
     p.addEdge(0, 2);
     p.addEdge(1, 4);
     p.addEdge(1, 5);
-    p.addEdge(2, 3);
-    p.addEdge(2, 4);
+    // p.addEdge(2, 3);
+    // p.addEdge(2, 4);
     p.addEdge(4, 5);
-    p.addEdge(3, 0);
-    p.addEdge(6, 3);
+    // p.addEdge(3, 0);
+    // p.addEdge(6, 3);
     p.addEdge(6, 7);
     p.addEdge(8, 7);
     p.addEdge(6, 8);
-    p.addEdge(8, 2);
+    // p.addEdge(8, 2);
 
-    p.printGraph();
+    p.bs(0);
 
-    vector<pair<int, int>> brig = p.bridges();
-    for (auto i : brig)
-        cout << i.first << " " << i.second << endl;
+    // vector<pair<int, int>> brig = p.bridges();
+    // for (auto i : brig)
+    //     cout << i.first << " " << i.second << endl;
 
     // cout << endl
     //      << p.shortestPath(5);

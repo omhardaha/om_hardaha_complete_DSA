@@ -1,25 +1,58 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+bool backspaceCompare(string s, string t)
+{
+
+    for (int i = 0; i < s.size(); i++)
+    {
+        if (i > 0 && s[i] == '#')
+        {
+            int temp = i - 1; 
+            while (temp >= 0 && s[temp] == '#')
+            {
+                temp--;
+            }
+            if (s[temp] >= 0)
+            {
+                s[temp] = '#';
+            }
+        }
+    }
+    for (int i = 0; i < t.size(); i++)
+    {
+        if (i > 0 && t[i] == '#')
+            t[i - 1] = '#';
+    }
+    int i = 0, j = 0;
+    while (i < s.size() && j < t.size())
+    {
+        while (i < s.size() && s[i] == '#')
+            i++;
+        while (j < t.size() && t[j] == '#')
+            j++;
+
+        if (i < s.size() && j < t.size())
+        {
+
+            cout << "om" << endl;
+            if (s[i] == t[j])
+            {
+                i++;
+                j++;
+            }
+            else
+                return false;
+        }
+    }
+
+    return i == s.size() && j == t.size();
+}
+
 int main()
 {
-    ATM j;
-    j.deposit(vector<int>{0, 10, 0, 3, 0});
-    vector<int> l = j.withdraw(500);
-    cout << endl;
-    for (auto i : l)
-        cout << i << " ";
-    // j.deposit(vector<int>{0, 1, 0, 1, 1});
-
-    // l = j.withdraw(600);
-    // cout << endl;
-    // for (auto i : l)
-    //     cout << i << " ";
-
-    // l = j.withdraw(550);
-
-    // cout << endl;
-    // for (auto i : l)
-    //     cout << i << " ";
+    string s = "ab#c";
+    string t = "ad#c";
+    cout << backspaceCompare(s, t);
     return 0;
 }
