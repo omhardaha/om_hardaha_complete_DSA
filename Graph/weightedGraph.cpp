@@ -5,17 +5,17 @@ class Graph
 private:
     int size;
     int i = 10;
-    bool unDirected;  
-   vector< vector<pair<int, int>> >l;
+    bool unDirected;
+    vector<vector<pair<int, int>>> l;
 
 public:
     // Graph Constructor
     //  Note - Use second argument as false if use want to create directed graph
     Graph(int v, bool dir = true)
     {
-        size = v; 
+        size = v;
         unDirected = dir;
-        l = vector< vector<pair<int, int>> >(size);
+        l = vector<vector<pair<int, int>>>(size);
     }
 
     // adding edge

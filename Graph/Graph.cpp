@@ -424,7 +424,7 @@ int main()
     p.addEdge(6, 8);
     // p.addEdge(8, 2);
 
-    p.bs(0);
+    p.bfs(0);
 
     // vector<pair<int, int>> brig = p.bridges();
     // for (auto i : brig)
