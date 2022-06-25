@@ -52,7 +52,7 @@ public:
     }
     vector<vector<string>> searchWord1(string word)
     {
-        vector<vector<string>> final;
+        vector<vector<string>> final(word.size());
         vector<Node *> links;
         Node *temp = root;
         string currentWord = "";
@@ -74,7 +74,6 @@ public:
         Node *lastNode = nullptr;
         for (int i = links.size() - 1; i >= 0; i--)
         {
-            cout << word[i] << endl;
             queue<pair<string, Node *>> Q;
             Q.push({currentWord, links[i]});
             bool f = true;
@@ -96,11 +95,6 @@ public:
                     };
                     for (auto c = 'a'; c <= 'z'; c++)
                     {
-                        // if ((i < (links.size() - 1)) && (word[i + 1] != c) && f)
-                        // {
-                        //     f = false;
-                        //     continue;
-                        // }
                         if (g.second->containsKey(c))
                         {
                             Node *j = g.second->getNode(c);
@@ -121,34 +115,27 @@ public:
                 p.pop();
             };
             reverse(ans.begin(), ans.end());
-            final.push_back(ans);
+            final[i] = (ans);
             currentWord.pop_back();
             lastNode = links[i];
         }
         return final;
     }
 };
+class Solution
+{
+public:
+    vector<vector<string>> suggestedProducts(vector<string> &products, string searchWord)
+    {
+        Trie p;
+        for (auto i : products)
+            p.addWord(i);
+        vector<vector<string>> a = p.searchWord1(searchWord);
+        return a;
+    }
+};
 int main()
 {
-    // Trie p;
-    // p.addWord("mobile");
-    // p.addWord("mouse");
-    // p.addWord("moneypot");
-    // p.addWord("monitor");
-    // p.addWord("mousepad");
-    // vector<vector<string>> w = p.searchWord1("mouse");
-    // for (auto i : w)
-    // {
-    //     cout << endl;
-    //     for (auto e : i)
-    //     {
-    //         cout << e << " ";
-    //     }
-    // }
-    int a = 0;
-    int b = 1;
-    int a1 = !a;
-    int b1 = !b;
-    cout<<b1;
-       return 0;
+
+    return 0;
 }

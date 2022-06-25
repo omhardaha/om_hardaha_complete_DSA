@@ -38,6 +38,7 @@ public:
     void insert(string word)
     {
         Node *p = root;
+
         for (char key : word)
         {
             if (!p->containsKey(key))
@@ -115,6 +116,22 @@ public:
             }
         }
         return false;
+    }
+    void erase(string word)
+    {
+        if (search(word))
+        {
+            Node *p = root;
+            for (char key : word)
+            {
+                // if (!p->containsKey(key))
+                // {
+                //     p->put(key);
+                // }
+                p = p->getNode(key);
+            }
+            
+        }
     }
 };
 

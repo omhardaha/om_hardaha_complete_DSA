@@ -1,6 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// LIS Qs -
+// https://leetcode.com/problems/longest-increasing-subsequence/
+// https://leetcode.com/problems/largest-divisible-subset/
+// https://leetcode.com/problems/longest-string-chain/
+// https://leetcode.com/problems/number-of-longest-increasing-subsequence/
+// https://practice.geeksforgeeks.org/problems/longest-bitonic-subsequence0824/1/
+
 void replaceCeiling(vector<int> &lis, int val)
 {
     int low = 0;
