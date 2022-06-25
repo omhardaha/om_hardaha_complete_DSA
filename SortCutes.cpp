@@ -77,6 +77,17 @@ int main()
     //     }
     // }
 
+//     vector<int>prefix = nums;
+//     vector<int>refix = nums;
+        
+//          for (int j = 1; j <nums.size(); j++)
+//          {
+//             prefix[i]+=nums[i-1];
+//          }
+//          for (int j = nums.size()-2; j >=0; j--)
+//          {
+//             refix[i]+=nums[i+1];
+//          }
     // for (auto row : grid)
     // {
     //     for (auto i : row)
