@@ -1,103 +1,76 @@
 #include <bits/stdc++.h>
 using namespace std;
-// int isSafe(vector<vector<int>> &board, int i, int j)
-// {
+int i, j, k;
 
-//     if (i < 0 || j < 0 || j >= board[0].size() || i >= board.size())
-//     {
-//         return false;
-//     }
-//     return true;
-// }
+int isSafe(vector<vector<int>> &board, int i, int j)
+{
+    if (i < 0 || j < 0 || j >= board[0].size() || i >= board.size())
+    {
+        return false;
+    }
+    return true;
+}
 int main()
 {
-    // set<int> map;
-    // unordered_set<int> map;
-    // unordered_set<pair<int,int>> map;
+    vector<int> nums = {1, 24, 35, 6, 24, 23};
+    int maxElem = *max_element(nums.begin(), nums.end());
+    int minElem = *min_element(nums.begin(), nums.end());
+    int countN = count(nums.begin(), nums.end(), 6);
+    int sum = accumulate(nums.begin(), nums.end(), 0);
+    sort(nums.begin(), nums.end());
+    reverse(nums.begin(), nums.end());
 
-    // unordered_map<int, int> map1;
-    // map1[65] = 3;
-    // map1[2] = 4;
-    // map1[5] = 3;
-    // cout << map1.begin()->second << endl;
-    // map1[map1.begin()->first] = 44;
-    // map1.begin()->first;
-    // for (auto i : map1)
-    // {
-    //     cout << i.first << " " << i.second << endl;
-    // }
-    // stack<int> st;
-    // priority_queue<int> max_heap;
-    // priority_queue<int, vector<int>, greater<int>> min_heap;
+    priority_queue<int> max_heap;
+    priority_queue<pair<int, int>> max_heap_pair;
+    priority_queue<int, vector<int>, greater<int>> min_heap;
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> min_heap_pair;
+    vector<int> dp(nums.size(), -1);
+    vector<vector<int>> dp(nums.size(), vector<int>(nums.size(), -1));
+    vector<vector<vector<int>>> dp(nums.size(), vector<vector<int>>(nums.size(), vector<int>(nums.size(), -1)));
 
-    // priority_queue<pair<int, int>> max_heap;
-    // priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> min_heap;
-    // priority_queue<int, vector<int>, greater<int>> min_heap;
-    // vector<vector<int>> grid(100000, vector<int>(100000));
+    vector<int> prefix = nums;
+    for (int j = 1; j < nums.size(); j++)
+    {
+        prefix[i] += prefix[i - 1];
+    }
 
-    // 1d
-    //   vector<int>dp(nums.size(),-1);
-    // int solve( vector<int> & nums, vector<int> & dp, int i)
-    // {
-    //     if (i >= nums.size())  return INT_MAX;
-    //     if (i == nums.size() -1 )  return nums[i];
-    //     if (dp[i] != -1)   return dp[i];
-
-    //     int left = solve(nums, dp, i + 1, j);
-    //     int right = solve(nums, dp, i, j + 1);
-
-    //     return dp[i] = min(left, right);
-    // }
-
-    // int solve(vector<vector<int>>& grid,vector<vector<int>>&dp,int i,int j){
-    //     if (i < 0 || j < 0 ||j >= grid[0].size() || i >= grid.size() ) return INT_MAX;
-    //     if(i==grid.size()-1 && j==grid[0].size()-1)return grid[i][j];
-    //     if(dp[i][j]!=-1)return dp[i][j];
-    //     int left = solve(grid,dp,i+1,j);
-    //     int right = solve(grid,dp,i,j+1);
-    //     return dp[i][j] =grid[i][j] + min(left,right);
-    // }
-
-    // 2d
-    //   vector<vector<int>> dp(grid.size(), vector<int>(grid[0].size(),-1));
-
-    // 3d
-    //   vector<vector<vector<int>>> dp(grid.size(), vector<vector<int>>(grid[0].size(), vector<int>(grid[0].size(), -1)));
-    //   return solve(grid,dp,0);
-
-    // sort(grid.begin(), grid.end());
-    // reverse(grid.begin(), grid.end());
-    // int totalSum = accumulate(nums.begin(),nums.end(),0);
-
-    // for (int i = 0; i < grid.size(); i++)
-    // {
-    //     for (int j = 0; j < grid[0].size(); j++)
-    //     {
-    //         cout << grid[i][j];
-    //     }
-    // }
-
-//     vector<int>prefix = nums;
-//     vector<int>refix = nums;
-        
-//          for (int j = 1; j <nums.size(); j++)
-//          {
-//             prefix[i]+=nums[i-1];
-//          }
-//          for (int j = nums.size()-2; j >=0; j--)
-//          {
-//             refix[i]+=nums[i+1];
-//          }
-    // for (auto row : grid)
-    // {
-    //     for (auto i : row)
-    //     {
-    //         cout << i << " ";
-    //     }
-    //     cout << endl;
-    // }
-
-int t = true;
- cout<<t;
+    for (int i = 0; i < dp.size(); i++)
+    {
+        for (int j = 0; j < dp.size(); j++)
+        {
+            cout << dp[i];
+        }
+        cout << endl;
+    }
     return 0;
 }
+
+// int solve(vector<int> &nums, vector<int> &dp, int i)
+// {
+//     if (i >= nums.size())
+//     {
+//         return INT_MAX;
+//     }
+//     if (i == nums.size() - 1)
+//     {
+//         return nums[i];
+//     }
+//     int left = solve(nums, dp, i + 1, j);
+//     int right = solve(nums, dp, i, j + 1);
+//     return dp[i] = min(left, right);
+// }
+
+// int solve(vector<vector<int>> &grid, vector<vector<int>> &dp, int i, int j)
+// {
+//     if (i < 0 || j < 0 || j >= grid[0].size() || i >= grid.size())
+//     {
+//         return INT_MAX;
+//     }
+//     if (i == grid.size() - 1 && j == grid[0].size() - 1)
+//     {
+//         return grid[i][j];
+//     }
+//     int left = solve(grid, dp, i + 1, j);
+//     int right = solve(grid, dp, i, j + 1);
+//     return dp[i][j] = grid[i][j] + min(left, right);
+// }
