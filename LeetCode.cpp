@@ -121,3 +121,47 @@ int main()
 
 //     return dp[i][j] = min(d, min(u, min(r, l)));
 // }
+
+
+// LEVEL ORDER TRAVERSAL
+TreeNode* reverseOddLevels(TreeNode* root) {
+        
+        bool rev = 1;
+        queue<TreeNode* >Q;
+        Q.push(root);
+        
+        while(!Q.empty()){
+            
+            int size = Q.size();
+            vector<TreeNode* >arr;
+            
+            while(size--){
+                
+                auto node = Q.front();
+                
+                if(node->left){
+                   arr.push_back(node->left);
+                   Q.push(node->left);
+                }
+                
+                if(node->right){
+                   arr.push_back(node->right);
+                   Q.push(node->right);
+                }
+                
+                Q.pop();
+            }
+            
+            if(rev){
+                int l = 0;
+                int r = arr.size()-1;
+                while(l<r){
+                    swap(arr[l]->val,arr[r]->val);
+                    l++;r--;
+                }
+            }
+            rev = !rev;
+        }
+        
+        return root;
+    }
