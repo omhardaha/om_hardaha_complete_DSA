@@ -8,6 +8,14 @@ int isSafe(vector<vector<int>> &board, int i, int j)
     return !(i < 0 || j < 0 || j >= board[0].size() || i >= board.size() || board[i][j] == 1);
 }
 
+// edges to graph forming -->
+
+vector<vector<int>>graph(n);
+for(auto i : edges){
+    graph[i[0]].push_back(i[1]);
+    graph[i[1]].push_back(i[0]);
+}
+
 int main()
 {
     vector<int> nums = {1, 24, 35, 6, 24, 23};
